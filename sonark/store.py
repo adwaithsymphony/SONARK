@@ -119,6 +119,8 @@ class Sonark:
 
     def close(self) -> None:
         self.pool.shutdown(wait=True)
+        for client in self.clients.values():
+            client.close()
         self.meta.close()
 
     def __enter__(self):

@@ -64,14 +64,21 @@ export function useFileDetail(fileId: string | null, verify = true) {
 }
 
 /** Verified Survival Twin with per-shard data. Reads every shard, so it polls slowly. */
-export function useTwin(active: boolean) {
+/**
+ * Verified Survival Twin. It re-reads and hashes every shard while holding the API's
+ * single lock, so on a cluster with a lot of data it blocks uploads and every other
+ * request for seconds. It therefore fetches (and polls) only where it is the point of
+ * the screen (`active`, or `fetchIfMissing`); other screens show the cached result or
+ * offer "Verify now" (refetch() works even when the query is not enabled).
+ */
+export function useTwin(active: boolean, fetchIfMissing = active) {
   const interval = usePoll(active ? 30000 : false, "GET /api/twin");
   const running = useExperimentRunning();
   return useQuery({
     queryKey: qk.twin,
     queryFn: ({ signal }) => api.twin({ verify: true, shards: true }, signal),
     refetchInterval: interval,
-    enabled: !running,
+    enabled: !running && (active || fetchIfMissing),
     staleTime: 10000,
   });
 }

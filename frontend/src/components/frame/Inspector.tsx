@@ -197,7 +197,15 @@ export function ClusterSummary() {
         ) : twin.isError ? (
           <ErrorPanel compact error={twin.error} onRetry={() => void twin.refetch()} />
         ) : (
-          <Empty>Not loaded.</Empty>
+          <div className="space-y-2 text-sm">
+            <p className="text-muted">
+              Not run yet. A verified check reads and hashes every shard, and the API does nothing else while it runs, so it is not run
+              automatically here.
+            </p>
+            <button className="btn-ghost" onClick={() => void twin.refetch()}>
+              Verify now
+            </button>
+          </div>
         )}
       </Panel>
 

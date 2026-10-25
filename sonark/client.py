@@ -4,8 +4,7 @@ from __future__ import annotations
 
 import http.client
 import json
-import urllib.error
-import urllib.request
+import threading
 from urllib.parse import urlparse
 
 LOOPBACK_HOSTS = {"127.0.0.1", "localhost", "::1"}
@@ -21,27 +20,87 @@ class NodeError(Exception):
     """The node answered but refused the request."""
 
 
-# Ignore system proxy settings: nodes are addressed directly.
-_OPENER = urllib.request.build_opener(urllib.request.ProxyHandler({}))
-
-
 class NodeClient:
+    """HTTP client for one node, reusing keep-alive connections.
+
+    Why connections are pooled: with one connection per request, a 50 MB upload opens
+    300 connections and a verified Twin pass one per shard, i.e. thousands per minute.
+    Every closed connection sits in TIME_WAIT for about 2 minutes. On Windows, when
+    the node closed first (urllib always sent `Connection: close`), reused client ports
+    collided with the node's TIME_WAIT entries and connects hung until the 10 s
+    timeout, which failed shard writes. When the client closed first, the client ran
+    out of its 16k ephemeral ports and connects failed outright, marking live nodes
+    as down. Reusing a few connections per node removes both failure modes.
+    """
+
+    MAX_IDLE = 16  # idle connections kept per node (store pool is 2 x nodes threads)
+
     def __init__(self, node_id: str, url: str, timeout: float = 10.0):
         self.node_id = node_id
         self.url = url.rstrip("/")
         self.timeout = timeout
+        parsed = urlparse(self.url)
+        self._host, self._port = parsed.hostname, parsed.port
+        self._base_path = parsed.path.rstrip("/")
+        self._conn_cls = http.client.HTTPSConnection if parsed.scheme == "https" else http.client.HTTPConnection
+        self._idle: list[http.client.HTTPConnection] = []
+        self._lock = threading.Lock()
+
+    def _checkout(self, timeout: float) -> tuple[http.client.HTTPConnection, bool]:
+        with self._lock:
+            conn = self._idle.pop() if self._idle else None
+        if conn is None:
+            return self._conn_cls(self._host, self._port, timeout=timeout), False
+        conn.timeout = timeout
+        if conn.sock is not None:
+            conn.sock.settimeout(timeout)
+        return conn, True
+
+    def _checkin(self, conn: http.client.HTTPConnection) -> None:
+        with self._lock:
+            if len(self._idle) < self.MAX_IDLE:
+                self._idle.append(conn)
+                return
+        conn.close()
+
+    def close(self) -> None:
+        """Close idle pooled connections."""
+        with self._lock:
+            idle, self._idle = self._idle, []
+        for conn in idle:
+            conn.close()
 
     def _request(self, method: str, path: str, data: bytes | None = None,
                  headers: dict | None = None, timeout: float | None = None) -> tuple[int, bytes]:
-        req = urllib.request.Request(self.url + path, data=data, method=method,
-                                     headers=headers or {})
-        try:
-            with _OPENER.open(req, timeout=timeout or self.timeout) as resp:
-                return resp.status, resp.read()
-        except urllib.error.HTTPError as e:
-            return e.code, e.read()
-        except (urllib.error.URLError, OSError) as e:
-            raise NodeUnavailable(f"{self.node_id} ({self.url}): {e}") from e
+        """One request on a pooled connection (direct, no proxy).
+
+        A reused connection can be stale (the node restarted, or a stopped node closed
+        it). Such a failure is retried once on a fresh connection. That is safe because
+        every node operation is idempotent: PUT of the same shard id and bytes, GET, and
+        DELETE (a repeat returns 404, which callers accept). A timeout is never retried,
+        and an error on a fresh connection is reported at once, so a dead node costs no
+        more than before.
+        """
+        limit = timeout or self.timeout
+        for attempt in (1, 2):
+            conn, reused = self._checkout(limit)
+            try:
+                conn.request(method, self._base_path + path, body=data, headers=headers or {})
+                resp = conn.getresponse()
+                body = resp.read()
+            except (OSError, http.client.HTTPException) as e:
+                conn.close()
+                if reused and attempt == 1 and not isinstance(e, TimeoutError):
+                    continue
+                raise NodeUnavailable(f"{self.node_id} ({self.url}): {e}") from e
+            # Reuse only after a clean exchange. An error reply to an upload may have left
+            # request bytes unread on the node side, so that connection is discarded.
+            if resp.will_close or (data is not None and not 200 <= resp.status < 300):
+                conn.close()
+            else:
+                self._checkin(conn)
+            return resp.status, body
+        raise AssertionError("unreachable")  # pragma: no cover
 
     def health(self, timeout: float = 2.0) -> bool:
         """True iff the node answers GET /health with 200 within `timeout`.

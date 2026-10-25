@@ -19,6 +19,7 @@ import hashlib
 import json
 import os
 import re
+import socket
 import threading
 import uuid
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -82,6 +83,19 @@ class _Handler(BaseHTTPRequestHandler):
         if getattr(self.server, "verbose", False):
             super().log_message(fmt, *args)
 
+    # Track open (keep-alive) connections so NodeServer.stop() can close them.
+    def setup(self):
+        super().setup()
+        with self.server.conns_lock:
+            self.server.conns.add(self.connection)
+
+    def finish(self):
+        try:
+            super().finish()
+        finally:
+            with self.server.conns_lock:
+                self.server.conns.discard(self.connection)
+
     def _send(self, code: int, body: bytes = b"", ctype: str = "application/json"):
         self.send_response(code)
         self.send_header("Content-Type", ctype)
@@ -123,13 +137,18 @@ class _Handler(BaseHTTPRequestHandler):
 
     def do_PUT(self):
         sid = self._shard_id()
+        # The early errors below answer without reading the body; close the connection
+        # so unread body bytes can never be parsed as the next keep-alive request.
         if sid is None:
+            self.close_connection = True
             return self._json(400, {"error": "bad path"})
         try:
             length = int(self.headers.get("Content-Length", ""))
         except ValueError:
+            self.close_connection = True
             return self._json(411, {"error": "Content-Length required"})
         if length < 0 or length > MAX_SHARD_BYTES:
+            self.close_connection = True
             return self._json(413, {"error": "shard too large"})
         body = self.rfile.read(length)
         digest = hashlib.sha256(body).hexdigest()
@@ -148,11 +167,23 @@ class _Handler(BaseHTTPRequestHandler):
         self._json(404, {"error": "not found"})
 
 
+class _NodeHTTPServer(ThreadingHTTPServer):
+    stopping = False
+
+    def handle_error(self, request, client_address):
+        # Connections that stop() closed itself end with broken-pipe errors; not a fault.
+        if self.stopping:
+            return
+        super().handle_error(request, client_address)
+
+
 class NodeServer:
     def __init__(self, node_id: str, data_dir: str | os.PathLike,
                  host: str = "127.0.0.1", port: int = 0, verbose: bool = False):
-        self.httpd = ThreadingHTTPServer((host, port), _Handler)
+        self.httpd = _NodeHTTPServer((host, port), _Handler)
         self.httpd.daemon_threads = True
+        self.httpd.conns = set()
+        self.httpd.conns_lock = threading.Lock()
         self.httpd.node_id = node_id
         self.httpd.store = ShardStore(data_dir)
         self.httpd.verbose = verbose
@@ -175,3 +206,12 @@ class NodeServer:
     def stop(self) -> None:
         self.httpd.shutdown()
         self.httpd.server_close()
+        # A stopped node must not keep answering on clients' open keep-alive connections.
+        self.httpd.stopping = True
+        with self.httpd.conns_lock:
+            open_conns = list(self.httpd.conns)
+        for conn in open_conns:
+            try:
+                conn.shutdown(socket.SHUT_RDWR)
+            except OSError:
+                pass

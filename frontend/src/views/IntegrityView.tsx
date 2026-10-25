@@ -182,7 +182,7 @@ function RepairState({ pending, error, confirmed }: { pending: boolean; error: u
 }
 
 export function FindingsPanel({ title, scan, at }: { title: string; scan: ScrubSummary; at: number }) {
-  const twin = useTwin(false);
+  const twin = useTwin(false, true); // findings need intact-shard counts
   const status = useStatus();
   const files = useFiles();
   const ui = useUi();

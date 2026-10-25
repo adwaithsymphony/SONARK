@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { act, cleanup, render, screen, within } from "@testing-library/react";
+import { act, cleanup, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import App from "../App";
@@ -180,6 +180,25 @@ describe("proof of survival", () => {
     const first = Object.values(report.outage_results)[0] as { sha256_expected: string };
     expect(screen.getAllByText(first.sha256_expected, { exact: false }).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/identical: all 64 hex characters match/).length).toBeGreaterThan(0);
+  });
+});
+
+describe("verified analysis is not run behind the user's back", () => {
+  it("loading the Storage Explorer does not request the verified Twin (it would block uploads)", async () => {
+    const { calls } = mockApi(baseRoutes());
+    act(() => useUi.getState().setView("files"));
+    renderApp();
+    expect((await screen.findAllByText("Storage Explorer")).length).toBeGreaterThan(0);
+    await screen.findAllByText("alpha.bin");
+    await new Promise((r) => setTimeout(r, 300));
+    expect(calls.some((c) => c.url.pathname === "/api/twin")).toBe(false);
+    expect(screen.getByRole("button", { name: "Verify now" })).toBeInTheDocument();
+  });
+  it("the Survival Twin view does request it", async () => {
+    const { calls } = mockApi(baseRoutes());
+    act(() => useUi.getState().setView("twin"));
+    renderApp();
+    await waitFor(() => expect(calls.some((c) => c.url.pathname === "/api/twin")).toBe(true));
   });
 });
 

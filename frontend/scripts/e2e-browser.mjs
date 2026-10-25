@@ -377,6 +377,37 @@ async function proofJsonFlow() {
   await shot("proof-exported");
 }
 
+/** Time raw uploads from inside the page (same origin as the app) in three ways. */
+async function uploadTimingFlow() {
+  await send("Page.navigate", { url: `${URL_}/#/files` });
+  await waitFor("app", `!!document.querySelector("main")`, 20000);
+  await sleep(1500);
+  for (const mb of (args.sizes ?? "0.09,50").split(",").map(Number)) {
+    const r = await evaluate(`(async () => {
+      const bytes = Math.round(${mb} * 1024 * 1024);
+      const blob = new Blob([crypto.getRandomValues(new Uint8Array(Math.min(bytes, 65536)))]);
+      const parts = []; for (let n = 0; n < bytes; n += 65536) parts.push(blob.slice(0, Math.min(65536, bytes - n)));
+      const body = new Blob(parts);
+      const out = {};
+      let t = performance.now();
+      let res = await fetch("/api/files?name=t-fetch-" + Date.now() + ".bin", { method: "PUT", headers: { "Content-Type": "application/octet-stream" }, body });
+      out.fetch = { status: res.status, ms: Math.round(performance.now() - t), body: res.status === 201 ? undefined : (await res.text()).slice(0, 200) };
+      const xhr = (progress) => new Promise((ok) => {
+        const x = new XMLHttpRequest(); const t0 = performance.now(); let events = 0, firstMs = null, sentDoneMs = null;
+        x.open("PUT", "/api/files?name=t-xhr-" + progress + "-" + Date.now() + ".bin");
+        x.setRequestHeader("Content-Type", "application/octet-stream");
+        if (progress) x.upload.onprogress = (e) => { events++; if (firstMs === null) firstMs = Math.round(performance.now() - t0); if (e.loaded >= e.total) sentDoneMs ??= Math.round(performance.now() - t0); };
+        x.onloadend = () => ok({ status: x.status, ms: Math.round(performance.now() - t0), progressEvents: events, firstProgressMs: firstMs, allBytesSentMs: sentDoneMs, body: x.status === 201 ? undefined : String(x.responseText).slice(0, 200), server: x.getResponseHeader("server") });
+        x.send(body);
+      });
+      out.xhrWithProgress = await xhr(true);
+      out.xhrNoProgress = await xhr(false);
+      return out;
+    })()`);
+    step(`${mb} MiB: ${JSON.stringify(r)}`);
+  }
+}
+
 async function exportFlow() {
   step("export PNG from the 3D stage");
   await send("Browser.setDownloadBehavior", { behavior: "allow", downloadPath: OUT, eventsEnabled: true });
@@ -452,6 +483,7 @@ try {
   if (FLOWS.includes("findings")) await findingsFlow();
   if (FLOWS.includes("blank")) await blankFlow();
   if (FLOWS.includes("proofjson")) await proofJsonFlow();
+  if (FLOWS.includes("uploadtiming")) await uploadTimingFlow();
 } catch (e) {
   exitCode = 1;
   step(`FAILED: ${e.message}`);
