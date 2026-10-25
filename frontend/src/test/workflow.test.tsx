@@ -187,7 +187,7 @@ describe("disconnected backend", () => {
   it("shows an unreachable banner and never invents data", async () => {
     globalThis.fetch = vi.fn().mockRejectedValue(new TypeError("Failed to fetch"));
     renderApp();
-    expect(await screen.findByText(/API unreachable at http:\/\/127.0.0.1:8800/, {}, { timeout: 3000 })).toBeInTheDocument();
+    expect(await screen.findByText(/API unreachable at http:\/\/127.0.0.1:8800 \(via this page's \/api proxy\)/, {}, { timeout: 3000 })).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: /Node n1/ })).toBeNull();
     expect(screen.getByText(/No data has been received yet/)).toBeInTheDocument();
   });

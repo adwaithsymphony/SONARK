@@ -11,7 +11,7 @@ Terminal 1, the backend (from the repository root):
 
 ```sh
 python -m sonark init-local --dir sonark-cluster --nodes 6 --k 4 --m 2 --base-port 9300
-python -m sonark --cluster sonark-cluster/cluster.json serve --manage --port 8800 --cors-origin http://localhost:5173
+python -m sonark --cluster sonark-cluster/cluster.json serve --manage --port 8800
 ```
 
 Terminal 2, the frontend:
@@ -22,13 +22,16 @@ npm install
 npm run dev          # http://localhost:5173
 ```
 
-- **API base URL:** set `VITE_API_BASE_URL` (default `http://127.0.0.1:8800`), either in
-  `frontend/.env.local` or in the environment, e.g.
-  `VITE_API_BASE_URL=http://127.0.0.1:8810 npm run dev`.
-- **CORS:** the API only answers browsers from origins listed with `--cors-origin`.
-  - The dev server runs at `http://localhost:5173`.
-  - `npm run preview` runs at `http://localhost:4173`; add that origin too if you use it.
-  - If you open the page as `http://127.0.0.1:5173`, that is a different origin and must be added as well.
+- **How the page reaches the API:** the Vite dev server (`npm run dev`) and the preview
+  server (`npm run preview`) forward `/api` to the backend, which is
+  `http://127.0.0.1:8800` by default. The page and the API therefore share one origin, so
+  no CORS setup is needed for whichever address the dev server answers on. Open
+  `http://localhost:5173`. On Windows, Vite listens on IPv6 `::1`, so
+  `http://[::1]:5173` also works but `http://127.0.0.1:5173` does not load.
+- **Different backend port:** set `SONARK_API` before starting Vite, e.g.
+  `$env:SONARK_API="http://127.0.0.1:8810"; npm run dev`.
+- **Calling an API directly** (no forwarding, e.g. a static build served elsewhere): set
+  `VITE_API_BASE_URL`. The API must then be started with `--cors-origin <page origin>`.
 - **Node control:** `--manage` is required for scenarios and for node stop/start.
   Without it the UI stays usable but disables those actions and says why.
 
@@ -39,13 +42,13 @@ Prerequisites: Python 3.11+ and Node 20+ (tested with Python 3.13 and Node 24).
 ```powershell
 # Terminal 1: backend (from the repository root, e.g. D:\ANOMALY\Sonark)
 python -m sonark init-local --dir sonark-cluster --nodes 6 --k 4 --m 2 --base-port 9300
-python -m sonark --cluster sonark-cluster/cluster.json serve --manage --port 8800 --cors-origin http://localhost:5173
+python -m sonark --cluster sonark-cluster/cluster.json serve --manage --port 8800
 #   leave it running; Ctrl+C stops the API and the 6 node processes
 
 # Terminal 2: frontend
 cd frontend
 npm install        # first time only
-npm run dev        # open http://localhost:5173 in Chrome or Edge (http://localhost, not 127.0.0.1)
+npm run dev        # open http://localhost:5173 in Chrome or Edge
 ```
 
 Demo path in the UI:
@@ -62,7 +65,7 @@ Reset:
 3. Delete `sonark-cluster/`, then run `init-local` again.
 
 If port 8800 is taken, start the API with `--port 8810` and the frontend with
-`$env:VITE_API_BASE_URL="http://127.0.0.1:8810"; npm run dev`.
+`$env:SONARK_API="http://127.0.0.1:8810"; npm run dev`.
 
 ## Checks
 

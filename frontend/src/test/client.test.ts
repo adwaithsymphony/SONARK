@@ -6,8 +6,8 @@ import { fixture, mockApi, r } from "./fixtures";
 afterEach(() => vi.restoreAllMocks());
 
 describe("api client", () => {
-  it("defaults to the local API", () => {
-    expect(apiBase()).toBe("http://127.0.0.1:8800");
+  it("defaults to the page's own origin, where the Vite server proxies /api", () => {
+    expect(apiBase()).toBe(window.location.origin);
   });
 
   it("unwraps {data} and validates", async () => {

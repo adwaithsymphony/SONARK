@@ -43,12 +43,12 @@ Requirements: Python 3.11+ and Node.js 20+ (tested with Python 3.13 and Node 24)
 ```powershell
 # Terminal 1: backend, from the repository root
 python -m sonark init-local --dir sonark-cluster --nodes 6 --k 4 --m 2 --base-port 9300
-python -m sonark --cluster sonark-cluster/cluster.json serve --manage --port 8800 --cors-origin http://localhost:5173
+python -m sonark --cluster sonark-cluster/cluster.json serve --manage --port 8800
 
 # Terminal 2: frontend
 cd frontend
 npm install
-npm run dev        # open http://localhost:5173
+npm run dev        # open http://localhost:5173 (the dev server forwards /api to port 8800)
 ```
 
 `sonark-cluster/` holds local runtime data (shards, metadata database, logs) and is

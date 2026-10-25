@@ -9,9 +9,30 @@ import { apiErrorBody } from "./schemas";
 
 const DEFAULT_BASE = "http://127.0.0.1:8800";
 
+/** True when no VITE_API_BASE_URL is set, so requests go to this page's own /api proxy. */
+export function usesProxy(): boolean {
+  const raw = (import.meta.env.VITE_API_BASE_URL as string | undefined)?.trim();
+  return !raw && typeof window !== "undefined" && /^https?:/.test(window.location?.origin ?? "");
+}
+
+/**
+ * Base URL for API requests. By default the page's own origin: the Vite server
+ * forwards /api to the backend, so no CORS setup is needed and the app works from
+ * any local address. VITE_API_BASE_URL overrides this to call an API directly
+ * (that API must then be started with --cors-origin for the page's origin).
+ */
 export function apiBase(): string {
   const raw = (import.meta.env.VITE_API_BASE_URL as string | undefined)?.trim();
-  return (raw && raw.length > 0 ? raw : DEFAULT_BASE).replace(/\/+$/, "");
+  if (raw) return raw.replace(/\/+$/, "");
+  if (usesProxy()) return window.location.origin;
+  return DEFAULT_BASE; // no page (e.g. Node-based tests): talk to the default API directly
+}
+
+/** Where requests really end up, for messages: the proxy target or the direct URL. */
+export function apiTargetDescription(): string {
+  if (!usesProxy()) return apiBase();
+  const target = typeof __SONARK_API_TARGET__ === "string" ? __SONARK_API_TARGET__ : DEFAULT_BASE;
+  return `${target} (via this page's /api proxy)`;
 }
 
 /** The server could not be reached at all (refused, DNS, CORS-blocked, offline). */
@@ -22,7 +43,9 @@ export class ApiUnreachableError extends Error {
     readonly reason?: unknown,
   ) {
     super(
-      `Cannot reach the Sonark API at ${url}. Is \`sonark serve\` running, and was it started with --cors-origin for this page's origin?`,
+      usesProxy()
+        ? `Cannot reach the Sonark API at ${apiTargetDescription()}. Is \`python -m sonark ... serve --manage\` running on that port?`
+        : `Cannot reach the Sonark API at ${url}. Is \`sonark serve\` running, and was it started with --cors-origin for this page's origin?`,
     );
   }
 }

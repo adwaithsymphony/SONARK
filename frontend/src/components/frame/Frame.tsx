@@ -1,6 +1,6 @@
 import { Activity, Boxes, FileStack, FlaskConical, HardDrive, PanelRight, Search, ShieldCheck, Waves } from "lucide-react";
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
-import { apiBase } from "../../api/client";
+import { apiTargetDescription, usesProxy } from "../../api/client";
 import { useFiles, useHealth, useStatus } from "../../api/queries";
 import { usePerf } from "../../api/scheduler";
 import { formatTime } from "../../lib/format";
@@ -126,7 +126,7 @@ export function TopBar() {
       <Pill
         tone="lost"
         label={`Unreachable${health.dataUpdatedAt ? ` · last OK ${formatTime(health.dataUpdatedAt)}` : ""}`}
-        title={`${apiBase()} did not answer`}
+        title={`${apiTargetDescription()} did not answer`}
       />
     );
   } else if (health.data) {
@@ -134,11 +134,11 @@ export function TopBar() {
       <Pill
         tone={slowMs ? "experiment" : "live"}
         label={`Reachable · ${slowMs ? `slow: status ${(slowMs / 1000).toFixed(1)} s` : "polling"} · ${formatTime(health.dataUpdatedAt)}${health.data.read_only ? " · read-only" : ""}${health.data.node_control ? "" : " · no node control"}`}
-        title={`API ${health.data.version} at ${apiBase()}. No event stream exists, so the UI polls; the time is the last successful poll.`}
+        title={`API ${health.data.version} at ${apiTargetDescription()}. No event stream exists, so the UI polls; the time is the last successful poll.`}
       />
     );
   } else {
-    conn = <Pill tone="muted" label="Connecting…" title={apiBase()} />;
+    conn = <Pill tone="muted" label="Connecting…" title={apiTargetDescription()} />;
   }
 
   return (
@@ -331,12 +331,20 @@ export function DisconnectedBanner() {
   if (!health.isError || running) return null;
   return (
     <div role="alert" className="flex items-center gap-2 border-b border-lost/40 bg-lost/10 px-4 py-1.5 text-xs text-lost">
-      <span className="font-semibold">API unreachable at {apiBase()}.</span>
+      <span className="font-semibold">API unreachable at {apiTargetDescription()}.</span>
       <span className="text-muted">
         {health.dataUpdatedAt
           ? `Everything shown is cached from ${formatTime(health.dataUpdatedAt)} or earlier and may be out of date.`
           : "No data has been received yet."}{" "}
-        Start the backend with <code className="font-mono">serve --manage --cors-origin {window.location.origin}</code>.
+        {usesProxy() ? (
+          <>
+            Start the backend: <code className="font-mono">python -m sonark --cluster sonark-cluster/cluster.json serve --manage --port 8800</code>
+          </>
+        ) : (
+          <>
+            Start the backend with <code className="font-mono">serve --manage --cors-origin {window.location.origin}</code>.
+          </>
+        )}
       </span>
     </div>
   );
