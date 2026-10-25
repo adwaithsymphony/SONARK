@@ -24,6 +24,24 @@ checking SHA-256 hashes.
   outcome, original and recovered hashes, a recovery timeline, and JSON or PDF export.
   Values the backend does not record are shown as "not reported", never invented.
 
+## Screenshots
+
+Captured from the running app on a local 6-node, 4+2 demo cluster. Every value shown comes
+from the backend, and the experiments are real controlled failures.
+
+![SONARK overview: healthy 6-node cluster in the 3D topology view](screenshots/01-sonark-overview.png)
+
+| | |
+|---|---|
+| ![File shard topology](screenshots/02-file-shard-topology.png) | ![Survival Twin preview](screenshots/03-survival-twin-preview.png) |
+| **File topology.** Where a file's 54 shards live, with its fault tolerance and minimal failure sets. | **Survival Twin preview.** A hypothetical failure of n3 and n5, predicted without touching the cluster. |
+| ![Stripe matrix](screenshots/04-stripe-matrix-reasoning.png) | ![Experiment confirmation](screenshots/05-experiment-confirmation.png) |
+| **Stripe matrix.** Per-stripe valid shards against the k required, now and under the preview. | **Confirmation.** A real experiment runs only after the node names are typed. |
+| ![Experiment results](screenshots/06-experiment-results.png) | ![Proof of Survival](screenshots/07-proof-of-survival.png) |
+| **Experiment result.** Prediction against reality: files rebuilt, SHA-256 matched, nodes restored. | **Proof of Survival.** The run's recorded evidence, ledger and timeline, exportable as JSON or PDF. |
+| ![Integrity scan](screenshots/08-integrity-repair.png) | |
+| **Integrity scan.** A read-only scrub that hash-checks every shard, with scan and repair history. | |
+
 ## Repository layout
 
 | Path | Contents |
