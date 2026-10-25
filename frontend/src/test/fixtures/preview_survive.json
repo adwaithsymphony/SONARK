@@ -1,0 +1,124 @@
+{
+ "status": 200,
+ "body": {
+  "data": {
+   "scenario_id": "scn-23a17aa78ab1",
+   "nodes": [
+    "n2"
+   ],
+   "nodes_already_down": [],
+   "snapshot": {
+    "taken_at": "2026-10-24T19:53:05+00:00",
+    "verified": true,
+    "fingerprint": "c2e47a637192b34001250760dcf225a8003138dfcad5d5502b9da7ea2600c3e8"
+   },
+   "summary": {
+    "files_total": 3,
+    "files_affected": 2,
+    "files_unaffected": 1,
+    "files_lost_after": 0,
+    "files_newly_lost": 0,
+    "data_loss_predicted": false
+   },
+   "predictions": {
+    "b1e11ee173e845809a7a9a494ef99846": true,
+    "120c676645c744929ddcdc025a16af0e": true,
+    "e3fe2e2026e442979fcfff1719853a8b": true
+   },
+   "files": [
+    {
+     "file_id": "b1e11ee173e845809a7a9a494ef99846",
+     "name": "alpha.bin",
+     "sha256": "d9963373910f20d774f32c8fb2898fab29825242c019d091d1a53a527b7b5105",
+     "status_before": "healthy",
+     "status_after": "degraded",
+     "recoverable_before": true,
+     "recoverable_after": true,
+     "fault_tolerance_after": 1,
+     "stripes_affected": 4,
+     "stripes_lost": [],
+     "stripes": [
+      {
+       "chunk_index": 0,
+       "k": 4,
+       "m": 2,
+       "valid_before": 6,
+       "valid_shards_lost": {
+        "n2": 1
+       },
+       "valid_after": 5,
+       "recoverable_after": true,
+       "explanation": "chunk 0: loses 1 valid shard(s) on n2x1; 5 remain, 4 needed -> survives with 1 to spare"
+      },
+      {
+       "chunk_index": 1,
+       "k": 4,
+       "m": 2,
+       "valid_before": 6,
+       "valid_shards_lost": {
+        "n2": 1
+       },
+       "valid_after": 5,
+       "recoverable_after": true,
+       "explanation": "chunk 1: loses 1 valid shard(s) on n2x1; 5 remain, 4 needed -> survives with 1 to spare"
+      },
+      {
+       "chunk_index": 2,
+       "k": 4,
+       "m": 2,
+       "valid_before": 6,
+       "valid_shards_lost": {
+        "n2": 1
+       },
+       "valid_after": 5,
+       "recoverable_after": true,
+       "explanation": "chunk 2: loses 1 valid shard(s) on n2x1; 5 remain, 4 needed -> survives with 1 to spare"
+      },
+      {
+       "chunk_index": 3,
+       "k": 4,
+       "m": 2,
+       "valid_before": 6,
+       "valid_shards_lost": {
+        "n2": 1
+       },
+       "valid_after": 5,
+       "recoverable_after": true,
+       "explanation": "chunk 3: loses 1 valid shard(s) on n2x1; 5 remain, 4 needed -> survives with 1 to spare"
+      }
+     ],
+     "explanation": "Survives. Tightest stripe is chunk 0 with 5 valid shards (needs 4). Remaining tolerance afterwards: 1 more node(s)."
+    },
+    {
+     "file_id": "120c676645c744929ddcdc025a16af0e",
+     "name": "beta.bin",
+     "sha256": "1b09e095fe0af3106605cf7dcbc6a5b5eb29e440849677d38c13e922a79f371d",
+     "status_before": "healthy",
+     "status_after": "at_risk",
+     "recoverable_before": true,
+     "recoverable_after": true,
+     "fault_tolerance_after": 0,
+     "stripes_affected": 1,
+     "stripes_lost": [],
+     "stripes": [
+      {
+       "chunk_index": 0,
+       "k": 2,
+       "m": 1,
+       "valid_before": 3,
+       "valid_shards_lost": {
+        "n2": 1
+       },
+       "valid_after": 2,
+       "recoverable_after": true,
+       "explanation": "chunk 0: loses 1 valid shard(s) on n2x1; 2 remain, 2 needed -> survives with 0 to spare"
+      }
+     ],
+     "explanation": "Survives. Tightest stripe is chunk 0 with 2 valid shards (needs 2). Remaining tolerance afterwards: 0 more node(s)."
+    }
+   ],
+   "explanation": "Failing n2 would make 0 recoverable file(s) unrecoverable; 2 affected file(s) survive.",
+   "executable": true
+  }
+ }
+}

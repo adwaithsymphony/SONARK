@@ -1,0 +1,197 @@
+{
+ "status": 200,
+ "body": {
+  "data": {
+   "events": [
+    {
+     "ts": "2026-10-24T19:53:31+00:00",
+     "kind": "node_start",
+     "file_id": null,
+     "chunk_index": null,
+     "shard_index": null,
+     "node_id": "n6",
+     "detail": "via API"
+    },
+    {
+     "ts": "2026-10-24T19:53:26+00:00",
+     "kind": "node_stop",
+     "file_id": null,
+     "chunk_index": null,
+     "shard_index": null,
+     "node_id": "n6",
+     "detail": "via API"
+    },
+    {
+     "ts": "2026-10-24T19:53:26+00:00",
+     "kind": "gc",
+     "file_id": null,
+     "chunk_index": null,
+     "shard_index": null,
+     "node_id": null,
+     "detail": {
+      "n1": 0,
+      "n2": 0,
+      "n3": 0,
+      "n4": 0,
+      "n5": 0,
+      "n6": 0
+     }
+    },
+    {
+     "ts": "2026-10-24T19:53:26+00:00",
+     "kind": "scrub",
+     "file_id": null,
+     "chunk_index": null,
+     "shard_index": null,
+     "node_id": null,
+     "detail": "repair=False files=3 shards=27 issues=0 repaired=0 lost=0"
+    },
+    {
+     "ts": "2026-10-24T19:53:26+00:00",
+     "kind": "scrub",
+     "file_id": null,
+     "chunk_index": null,
+     "shard_index": null,
+     "node_id": null,
+     "detail": "repair=True files=3 shards=27 issues=0 repaired=0 lost=0"
+    },
+    {
+     "ts": "2026-10-24T19:53:26+00:00",
+     "kind": "scrub",
+     "file_id": null,
+     "chunk_index": null,
+     "shard_index": null,
+     "node_id": null,
+     "detail": "repair=False files=3 shards=27 issues=0 repaired=0 lost=0"
+    },
+    {
+     "ts": "2026-10-24T19:53:26+00:00",
+     "kind": "scenario_end",
+     "file_id": null,
+     "chunk_index": null,
+     "shard_index": null,
+     "node_id": null,
+     "detail": {
+      "run_id": "run-2d2ad6533056",
+      "matched": true,
+      "repaired": 0,
+      "healthy_after": true,
+      "restore_errors": []
+     }
+    },
+    {
+     "ts": "2026-10-24T19:53:26+00:00",
+     "kind": "scrub",
+     "file_id": null,
+     "chunk_index": null,
+     "shard_index": null,
+     "node_id": null,
+     "detail": "repair=False files=3 shards=27 issues=0 repaired=0 lost=0"
+    },
+    {
+     "ts": "2026-10-24T19:53:26+00:00",
+     "kind": "scrub",
+     "file_id": null,
+     "chunk_index": null,
+     "shard_index": null,
+     "node_id": null,
+     "detail": "repair=True files=3 shards=27 issues=0 repaired=0 lost=0"
+    },
+    {
+     "ts": "2026-10-24T19:53:14+00:00",
+     "kind": "scenario_start",
+     "file_id": null,
+     "chunk_index": null,
+     "shard_index": null,
+     "node_id": null,
+     "detail": {
+      "run_id": "run-2d2ad6533056",
+      "scenario_id": "scn-089b6858a42a",
+      "nodes": [
+       "n1",
+       "n2",
+       "n3"
+      ],
+      "mode": "restart"
+     }
+    },
+    {
+     "ts": "2026-10-24T19:53:14+00:00",
+     "kind": "scenario_end",
+     "file_id": null,
+     "chunk_index": null,
+     "shard_index": null,
+     "node_id": null,
+     "detail": {
+      "run_id": "run-1848cf86cb0a",
+      "matched": true,
+      "repaired": 0,
+      "healthy_after": true,
+      "restore_errors": []
+     }
+    },
+    {
+     "ts": "2026-10-24T19:53:14+00:00",
+     "kind": "scrub",
+     "file_id": null,
+     "chunk_index": null,
+     "shard_index": null,
+     "node_id": null,
+     "detail": "repair=False files=3 shards=27 issues=0 repaired=0 lost=0"
+    },
+    {
+     "ts": "2026-10-24T19:53:14+00:00",
+     "kind": "scrub",
+     "file_id": null,
+     "chunk_index": null,
+     "shard_index": null,
+     "node_id": null,
+     "detail": "repair=True files=3 shards=27 issues=0 repaired=0 lost=0"
+    },
+    {
+     "ts": "2026-10-24T19:53:05+00:00",
+     "kind": "scenario_start",
+     "file_id": null,
+     "chunk_index": null,
+     "shard_index": null,
+     "node_id": null,
+     "detail": {
+      "run_id": "run-1848cf86cb0a",
+      "scenario_id": "scn-23a17aa78ab1",
+      "nodes": [
+       "n2"
+      ],
+      "mode": "restart"
+     }
+    },
+    {
+     "ts": "2026-10-24T19:53:05+00:00",
+     "kind": "put",
+     "file_id": "e3fe2e2026e442979fcfff1719853a8b",
+     "chunk_index": null,
+     "shard_index": null,
+     "node_id": null,
+     "detail": "empty.txt size=0 chunks=0"
+    },
+    {
+     "ts": "2026-10-24T19:53:05+00:00",
+     "kind": "put",
+     "file_id": "120c676645c744929ddcdc025a16af0e",
+     "chunk_index": null,
+     "shard_index": null,
+     "node_id": null,
+     "detail": "beta.bin size=65536 chunks=1"
+    },
+    {
+     "ts": "2026-10-24T19:53:05+00:00",
+     "kind": "put",
+     "file_id": "b1e11ee173e845809a7a9a494ef99846",
+     "chunk_index": null,
+     "shard_index": null,
+     "node_id": null,
+     "detail": "alpha.bin size=196619 chunks=4"
+    }
+   ]
+  }
+ }
+}

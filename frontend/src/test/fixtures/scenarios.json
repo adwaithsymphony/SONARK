@@ -1,0 +1,31 @@
+{
+ "status": 200,
+ "body": {
+  "data": {
+   "scenarios": [
+    {
+     "run_id": "run-2d2ad6533056",
+     "scenario_id": "scn-089b6858a42a",
+     "ts": "2026-10-24T19:53:26+00:00",
+     "nodes": [
+      "n1",
+      "n2",
+      "n3"
+     ],
+     "mode": "restart",
+     "prediction_matched": true
+    },
+    {
+     "run_id": "run-1848cf86cb0a",
+     "scenario_id": "scn-23a17aa78ab1",
+     "ts": "2026-10-24T19:53:14+00:00",
+     "nodes": [
+      "n2"
+     ],
+     "mode": "restart",
+     "prediction_matched": true
+    }
+   ]
+  }
+ }
+}

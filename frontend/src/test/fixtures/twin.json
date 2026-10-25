@@ -1,0 +1,846 @@
+{
+ "status": 200,
+ "body": {
+  "data": {
+   "snapshot": {
+    "taken_at": "2026-10-24T19:53:05+00:00",
+    "verified": true,
+    "fingerprint": "c2e47a637192b34001250760dcf225a8003138dfcad5d5502b9da7ea2600c3e8"
+   },
+   "nodes": [
+    {
+     "node_id": "n1",
+     "up": true
+    },
+    {
+     "node_id": "n2",
+     "up": true
+    },
+    {
+     "node_id": "n3",
+     "up": true
+    },
+    {
+     "node_id": "n4",
+     "up": true
+    },
+    {
+     "node_id": "n5",
+     "up": true
+    },
+    {
+     "node_id": "n6",
+     "up": true
+    }
+   ],
+   "summary": {
+    "files": 3,
+    "status_counts": {
+     "healthy": 3,
+     "degraded": 0,
+     "at_risk": 0,
+     "lost": 0
+    },
+    "recoverable_files": 3,
+    "cluster_fault_tolerance": 1,
+    "smallest_loss_set_size": 2
+   },
+   "cluster_minimal_loss_sets": [
+    {
+     "nodes": [
+      "n1",
+      "n2"
+     ],
+     "size": 2,
+     "files_lost": [
+      "120c676645c744929ddcdc025a16af0e"
+     ]
+    },
+    {
+     "nodes": [
+      "n1",
+      "n3"
+     ],
+     "size": 2,
+     "files_lost": [
+      "120c676645c744929ddcdc025a16af0e"
+     ]
+    },
+    {
+     "nodes": [
+      "n2",
+      "n3"
+     ],
+     "size": 2,
+     "files_lost": [
+      "120c676645c744929ddcdc025a16af0e"
+     ]
+    },
+    {
+     "nodes": [
+      "n1",
+      "n4",
+      "n5"
+     ],
+     "size": 3,
+     "files_lost": [
+      "b1e11ee173e845809a7a9a494ef99846"
+     ]
+    },
+    {
+     "nodes": [
+      "n1",
+      "n4",
+      "n6"
+     ],
+     "size": 3,
+     "files_lost": [
+      "b1e11ee173e845809a7a9a494ef99846"
+     ]
+    },
+    {
+     "nodes": [
+      "n1",
+      "n5",
+      "n6"
+     ],
+     "size": 3,
+     "files_lost": [
+      "b1e11ee173e845809a7a9a494ef99846"
+     ]
+    },
+    {
+     "nodes": [
+      "n2",
+      "n4",
+      "n5"
+     ],
+     "size": 3,
+     "files_lost": [
+      "b1e11ee173e845809a7a9a494ef99846"
+     ]
+    },
+    {
+     "nodes": [
+      "n2",
+      "n4",
+      "n6"
+     ],
+     "size": 3,
+     "files_lost": [
+      "b1e11ee173e845809a7a9a494ef99846"
+     ]
+    },
+    {
+     "nodes": [
+      "n2",
+      "n5",
+      "n6"
+     ],
+     "size": 3,
+     "files_lost": [
+      "b1e11ee173e845809a7a9a494ef99846"
+     ]
+    },
+    {
+     "nodes": [
+      "n3",
+      "n4",
+      "n5"
+     ],
+     "size": 3,
+     "files_lost": [
+      "b1e11ee173e845809a7a9a494ef99846"
+     ]
+    },
+    {
+     "nodes": [
+      "n3",
+      "n4",
+      "n6"
+     ],
+     "size": 3,
+     "files_lost": [
+      "b1e11ee173e845809a7a9a494ef99846"
+     ]
+    },
+    {
+     "nodes": [
+      "n3",
+      "n5",
+      "n6"
+     ],
+     "size": 3,
+     "files_lost": [
+      "b1e11ee173e845809a7a9a494ef99846"
+     ]
+    },
+    {
+     "nodes": [
+      "n4",
+      "n5",
+      "n6"
+     ],
+     "size": 3,
+     "files_lost": [
+      "b1e11ee173e845809a7a9a494ef99846"
+     ]
+    }
+   ],
+   "cluster_minimal_loss_sets_total": 13,
+   "cluster_minimal_loss_sets_truncated": false,
+   "enumeration_complete": true,
+   "files": [
+    {
+     "file_id": "b1e11ee173e845809a7a9a494ef99846",
+     "name": "alpha.bin",
+     "size": 196619,
+     "sha256": "d9963373910f20d774f32c8fb2898fab29825242c019d091d1a53a527b7b5105",
+     "stripe_count": 4,
+     "coding": [
+      "4+2"
+     ],
+     "status": "healthy",
+     "recoverable": true,
+     "fault_tolerance": 2,
+     "design_tolerance": 2,
+     "placement_concentrated": false,
+     "smallest_loss_set_size": 3,
+     "minimal_loss_sets_total": 20,
+     "minimal_loss_sets": [
+      {
+       "nodes": [
+        "n1",
+        "n2",
+        "n3"
+       ],
+       "size": 3,
+       "stripes_lost": [
+        0,
+        1,
+        2,
+        3
+       ]
+      },
+      {
+       "nodes": [
+        "n1",
+        "n2",
+        "n4"
+       ],
+       "size": 3,
+       "stripes_lost": [
+        0,
+        1,
+        2,
+        3
+       ]
+      },
+      {
+       "nodes": [
+        "n1",
+        "n2",
+        "n5"
+       ],
+       "size": 3,
+       "stripes_lost": [
+        0,
+        1,
+        2,
+        3
+       ]
+      },
+      {
+       "nodes": [
+        "n1",
+        "n2",
+        "n6"
+       ],
+       "size": 3,
+       "stripes_lost": [
+        0,
+        1,
+        2,
+        3
+       ]
+      },
+      {
+       "nodes": [
+        "n1",
+        "n3",
+        "n4"
+       ],
+       "size": 3,
+       "stripes_lost": [
+        0,
+        1,
+        2,
+        3
+       ]
+      },
+      {
+       "nodes": [
+        "n1",
+        "n3",
+        "n5"
+       ],
+       "size": 3,
+       "stripes_lost": [
+        0,
+        1,
+        2,
+        3
+       ]
+      },
+      {
+       "nodes": [
+        "n1",
+        "n3",
+        "n6"
+       ],
+       "size": 3,
+       "stripes_lost": [
+        0,
+        1,
+        2,
+        3
+       ]
+      },
+      {
+       "nodes": [
+        "n1",
+        "n4",
+        "n5"
+       ],
+       "size": 3,
+       "stripes_lost": [
+        0,
+        1,
+        2,
+        3
+       ]
+      },
+      {
+       "nodes": [
+        "n1",
+        "n4",
+        "n6"
+       ],
+       "size": 3,
+       "stripes_lost": [
+        0,
+        1,
+        2,
+        3
+       ]
+      },
+      {
+       "nodes": [
+        "n1",
+        "n5",
+        "n6"
+       ],
+       "size": 3,
+       "stripes_lost": [
+        0,
+        1,
+        2,
+        3
+       ]
+      },
+      {
+       "nodes": [
+        "n2",
+        "n3",
+        "n4"
+       ],
+       "size": 3,
+       "stripes_lost": [
+        0,
+        1,
+        2,
+        3
+       ]
+      },
+      {
+       "nodes": [
+        "n2",
+        "n3",
+        "n5"
+       ],
+       "size": 3,
+       "stripes_lost": [
+        0,
+        1,
+        2,
+        3
+       ]
+      },
+      {
+       "nodes": [
+        "n2",
+        "n3",
+        "n6"
+       ],
+       "size": 3,
+       "stripes_lost": [
+        0,
+        1,
+        2,
+        3
+       ]
+      },
+      {
+       "nodes": [
+        "n2",
+        "n4",
+        "n5"
+       ],
+       "size": 3,
+       "stripes_lost": [
+        0,
+        1,
+        2,
+        3
+       ]
+      },
+      {
+       "nodes": [
+        "n2",
+        "n4",
+        "n6"
+       ],
+       "size": 3,
+       "stripes_lost": [
+        0,
+        1,
+        2,
+        3
+       ]
+      },
+      {
+       "nodes": [
+        "n2",
+        "n5",
+        "n6"
+       ],
+       "size": 3,
+       "stripes_lost": [
+        0,
+        1,
+        2,
+        3
+       ]
+      },
+      {
+       "nodes": [
+        "n3",
+        "n4",
+        "n5"
+       ],
+       "size": 3,
+       "stripes_lost": [
+        0,
+        1,
+        2,
+        3
+       ]
+      },
+      {
+       "nodes": [
+        "n3",
+        "n4",
+        "n6"
+       ],
+       "size": 3,
+       "stripes_lost": [
+        0,
+        1,
+        2,
+        3
+       ]
+      },
+      {
+       "nodes": [
+        "n3",
+        "n5",
+        "n6"
+       ],
+       "size": 3,
+       "stripes_lost": [
+        0,
+        1,
+        2,
+        3
+       ]
+      },
+      {
+       "nodes": [
+        "n4",
+        "n5",
+        "n6"
+       ],
+       "size": 3,
+       "stripes_lost": [
+        0,
+        1,
+        2,
+        3
+       ]
+      }
+     ],
+     "minimal_loss_sets_truncated": false,
+     "enumeration_complete": true,
+     "explanation": "Recoverable. Survives any 2 node failure(s). Weakest stripe is chunk 0: 6 valid shards, needs 4. Smallest fatal combination: {n1, n2, n3}.",
+     "stripes": [
+      {
+       "chunk_index": 0,
+       "k": 4,
+       "m": 2,
+       "n": 6,
+       "valid": 6,
+       "shard_status_counts": {
+        "ok": 6,
+        "unverified": 0,
+        "missing": 0,
+        "corrupt": 0,
+        "node_down": 0
+       },
+       "margin": 2,
+       "recoverable": true,
+       "valid_shards_per_node": {
+        "n1": 1,
+        "n2": 1,
+        "n3": 1,
+        "n4": 1,
+        "n5": 1,
+        "n6": 1
+       },
+       "min_node_failures_to_lose": 3,
+       "shards": [
+        {
+         "shard_index": 0,
+         "node_id": "n1",
+         "status": "ok"
+        },
+        {
+         "shard_index": 1,
+         "node_id": "n2",
+         "status": "ok"
+        },
+        {
+         "shard_index": 2,
+         "node_id": "n3",
+         "status": "ok"
+        },
+        {
+         "shard_index": 3,
+         "node_id": "n4",
+         "status": "ok"
+        },
+        {
+         "shard_index": 4,
+         "node_id": "n5",
+         "status": "ok"
+        },
+        {
+         "shard_index": 5,
+         "node_id": "n6",
+         "status": "ok"
+        }
+       ]
+      },
+      {
+       "chunk_index": 1,
+       "k": 4,
+       "m": 2,
+       "n": 6,
+       "valid": 6,
+       "shard_status_counts": {
+        "ok": 6,
+        "unverified": 0,
+        "missing": 0,
+        "corrupt": 0,
+        "node_down": 0
+       },
+       "margin": 2,
+       "recoverable": true,
+       "valid_shards_per_node": {
+        "n1": 1,
+        "n2": 1,
+        "n3": 1,
+        "n4": 1,
+        "n5": 1,
+        "n6": 1
+       },
+       "min_node_failures_to_lose": 3,
+       "shards": [
+        {
+         "shard_index": 0,
+         "node_id": "n2",
+         "status": "ok"
+        },
+        {
+         "shard_index": 1,
+         "node_id": "n3",
+         "status": "ok"
+        },
+        {
+         "shard_index": 2,
+         "node_id": "n4",
+         "status": "ok"
+        },
+        {
+         "shard_index": 3,
+         "node_id": "n5",
+         "status": "ok"
+        },
+        {
+         "shard_index": 4,
+         "node_id": "n6",
+         "status": "ok"
+        },
+        {
+         "shard_index": 5,
+         "node_id": "n1",
+         "status": "ok"
+        }
+       ]
+      },
+      {
+       "chunk_index": 2,
+       "k": 4,
+       "m": 2,
+       "n": 6,
+       "valid": 6,
+       "shard_status_counts": {
+        "ok": 6,
+        "unverified": 0,
+        "missing": 0,
+        "corrupt": 0,
+        "node_down": 0
+       },
+       "margin": 2,
+       "recoverable": true,
+       "valid_shards_per_node": {
+        "n1": 1,
+        "n2": 1,
+        "n3": 1,
+        "n4": 1,
+        "n5": 1,
+        "n6": 1
+       },
+       "min_node_failures_to_lose": 3,
+       "shards": [
+        {
+         "shard_index": 0,
+         "node_id": "n3",
+         "status": "ok"
+        },
+        {
+         "shard_index": 1,
+         "node_id": "n4",
+         "status": "ok"
+        },
+        {
+         "shard_index": 2,
+         "node_id": "n5",
+         "status": "ok"
+        },
+        {
+         "shard_index": 3,
+         "node_id": "n6",
+         "status": "ok"
+        },
+        {
+         "shard_index": 4,
+         "node_id": "n1",
+         "status": "ok"
+        },
+        {
+         "shard_index": 5,
+         "node_id": "n2",
+         "status": "ok"
+        }
+       ]
+      },
+      {
+       "chunk_index": 3,
+       "k": 4,
+       "m": 2,
+       "n": 6,
+       "valid": 6,
+       "shard_status_counts": {
+        "ok": 6,
+        "unverified": 0,
+        "missing": 0,
+        "corrupt": 0,
+        "node_down": 0
+       },
+       "margin": 2,
+       "recoverable": true,
+       "valid_shards_per_node": {
+        "n1": 1,
+        "n2": 1,
+        "n3": 1,
+        "n4": 1,
+        "n5": 1,
+        "n6": 1
+       },
+       "min_node_failures_to_lose": 3,
+       "shards": [
+        {
+         "shard_index": 0,
+         "node_id": "n4",
+         "status": "ok"
+        },
+        {
+         "shard_index": 1,
+         "node_id": "n5",
+         "status": "ok"
+        },
+        {
+         "shard_index": 2,
+         "node_id": "n6",
+         "status": "ok"
+        },
+        {
+         "shard_index": 3,
+         "node_id": "n1",
+         "status": "ok"
+        },
+        {
+         "shard_index": 4,
+         "node_id": "n2",
+         "status": "ok"
+        },
+        {
+         "shard_index": 5,
+         "node_id": "n3",
+         "status": "ok"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "file_id": "120c676645c744929ddcdc025a16af0e",
+     "name": "beta.bin",
+     "size": 65536,
+     "sha256": "1b09e095fe0af3106605cf7dcbc6a5b5eb29e440849677d38c13e922a79f371d",
+     "stripe_count": 1,
+     "coding": [
+      "2+1"
+     ],
+     "status": "healthy",
+     "recoverable": true,
+     "fault_tolerance": 1,
+     "design_tolerance": 1,
+     "placement_concentrated": false,
+     "smallest_loss_set_size": 2,
+     "minimal_loss_sets_total": 3,
+     "minimal_loss_sets": [
+      {
+       "nodes": [
+        "n1",
+        "n2"
+       ],
+       "size": 2,
+       "stripes_lost": [
+        0
+       ]
+      },
+      {
+       "nodes": [
+        "n1",
+        "n3"
+       ],
+       "size": 2,
+       "stripes_lost": [
+        0
+       ]
+      },
+      {
+       "nodes": [
+        "n2",
+        "n3"
+       ],
+       "size": 2,
+       "stripes_lost": [
+        0
+       ]
+      }
+     ],
+     "minimal_loss_sets_truncated": false,
+     "enumeration_complete": true,
+     "explanation": "Recoverable. Survives any 1 node failure(s). Weakest stripe is chunk 0: 3 valid shards, needs 2. Smallest fatal combination: {n1, n2}.",
+     "stripes": [
+      {
+       "chunk_index": 0,
+       "k": 2,
+       "m": 1,
+       "n": 3,
+       "valid": 3,
+       "shard_status_counts": {
+        "ok": 3,
+        "unverified": 0,
+        "missing": 0,
+        "corrupt": 0,
+        "node_down": 0
+       },
+       "margin": 1,
+       "recoverable": true,
+       "valid_shards_per_node": {
+        "n1": 1,
+        "n2": 1,
+        "n3": 1
+       },
+       "min_node_failures_to_lose": 2,
+       "shards": [
+        {
+         "shard_index": 0,
+         "node_id": "n1",
+         "status": "ok"
+        },
+        {
+         "shard_index": 1,
+         "node_id": "n2",
+         "status": "ok"
+        },
+        {
+         "shard_index": 2,
+         "node_id": "n3",
+         "status": "ok"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "file_id": "e3fe2e2026e442979fcfff1719853a8b",
+     "name": "empty.txt",
+     "size": 0,
+     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+     "stripe_count": 0,
+     "coding": [],
+     "status": "healthy",
+     "recoverable": true,
+     "fault_tolerance": null,
+     "design_tolerance": null,
+     "placement_concentrated": false,
+     "smallest_loss_set_size": null,
+     "minimal_loss_sets_total": 0,
+     "minimal_loss_sets": [],
+     "minimal_loss_sets_truncated": false,
+     "enumeration_complete": true,
+     "explanation": "Empty file: no stripes, nothing can be lost.",
+     "stripes": []
+    }
+   ],
+   "timing_ms": {
+    "observe": 33.1,
+    "analyze": 0.4
+   }
+  }
+ }
+}

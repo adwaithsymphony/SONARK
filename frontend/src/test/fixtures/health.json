@@ -1,0 +1,11 @@
+{
+ "status": 200,
+ "body": {
+  "data": {
+   "service": "sonark",
+   "version": "0.1.0",
+   "read_only": false,
+   "node_control": true
+  }
+ }
+}

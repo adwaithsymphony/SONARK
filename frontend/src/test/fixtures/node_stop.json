@@ -1,0 +1,9 @@
+{
+ "status": 200,
+ "body": {
+  "data": {
+   "node_id": "n6",
+   "running": false
+  }
+ }
+}

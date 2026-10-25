@@ -1,0 +1,68 @@
+{
+ "status": 200,
+ "body": {
+  "data": {
+   "k": 4,
+   "m": 2,
+   "files": 3,
+   "bytes": 262155,
+   "nodes": [
+    {
+     "node_id": "n1",
+     "url": "http://127.0.0.1:59854",
+     "up": true,
+     "shards": 5,
+     "managed": true,
+     "running": true,
+     "pid": 9760
+    },
+    {
+     "node_id": "n2",
+     "url": "http://127.0.0.1:59855",
+     "up": true,
+     "shards": 5,
+     "managed": true,
+     "running": true,
+     "pid": 10408
+    },
+    {
+     "node_id": "n3",
+     "url": "http://127.0.0.1:59856",
+     "up": true,
+     "shards": 5,
+     "managed": true,
+     "running": true,
+     "pid": 22352
+    },
+    {
+     "node_id": "n4",
+     "url": "http://127.0.0.1:59857",
+     "up": true,
+     "shards": 4,
+     "managed": true,
+     "running": true,
+     "pid": 21884
+    },
+    {
+     "node_id": "n5",
+     "url": "http://127.0.0.1:59858",
+     "up": true,
+     "shards": 4,
+     "managed": true,
+     "running": true,
+     "pid": 13560
+    },
+    {
+     "node_id": "n6",
+     "url": "http://127.0.0.1:59859",
+     "up": false,
+     "shards": 4,
+     "managed": true,
+     "running": false,
+     "pid": null
+    }
+   ],
+   "nodes_up": 5
+  }
+ }
+}

@@ -1,0 +1,15 @@
+{
+ "status": 200,
+ "body": {
+  "data": {
+   "files_checked": 3,
+   "shards_checked": 27,
+   "issues": 0,
+   "repaired": 0,
+   "unrepaired": 0,
+   "lost_chunks": [],
+   "healthy": true,
+   "details": []
+  }
+ }
+}

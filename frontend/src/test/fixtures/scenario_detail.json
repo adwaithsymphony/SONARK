@@ -1,0 +1,330 @@
+{
+ "status": 200,
+ "body": {
+  "data": {
+   "run_id": "run-2d2ad6533056",
+   "scenario_id": "scn-089b6858a42a",
+   "nodes": [
+    "n1",
+    "n2",
+    "n3"
+   ],
+   "mode": "restart",
+   "restore_mode": "restart",
+   "started_at": "2026-10-24T19:53:14.932+00:00",
+   "finished_at": "2026-10-24T19:53:26.504+00:00",
+   "initial_state": {
+    "nodes": {
+     "n1": true,
+     "n2": true,
+     "n3": true,
+     "n4": true,
+     "n5": true,
+     "n6": true
+    },
+    "files": {
+     "b1e11ee173e845809a7a9a494ef99846": {
+      "name": "alpha.bin",
+      "sha256": "d9963373910f20d774f32c8fb2898fab29825242c019d091d1a53a527b7b5105",
+      "size": 196619
+     },
+     "120c676645c744929ddcdc025a16af0e": {
+      "name": "beta.bin",
+      "sha256": "1b09e095fe0af3106605cf7dcbc6a5b5eb29e440849677d38c13e922a79f371d",
+      "size": 65536
+     },
+     "e3fe2e2026e442979fcfff1719853a8b": {
+      "name": "empty.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+     }
+    }
+   },
+   "prediction": {
+    "summary": {
+     "files_total": 3,
+     "files_affected": 2,
+     "files_unaffected": 1,
+     "files_lost_after": 2,
+     "files_newly_lost": 2,
+     "data_loss_predicted": true
+    },
+    "predictions": {
+     "b1e11ee173e845809a7a9a494ef99846": false,
+     "120c676645c744929ddcdc025a16af0e": false,
+     "e3fe2e2026e442979fcfff1719853a8b": true
+    },
+    "explanation": "Failing n1, n2, n3 would make 2 recoverable file(s) unrecoverable; 0 affected file(s) survive.",
+    "files": [
+     {
+      "file_id": "b1e11ee173e845809a7a9a494ef99846",
+      "name": "alpha.bin",
+      "sha256": "d9963373910f20d774f32c8fb2898fab29825242c019d091d1a53a527b7b5105",
+      "status_before": "healthy",
+      "status_after": "lost",
+      "recoverable_before": true,
+      "recoverable_after": false,
+      "fault_tolerance_after": -1,
+      "stripes_affected": 4,
+      "stripes_lost": [
+       0,
+       1,
+       2,
+       3
+      ],
+      "stripes": [
+       {
+        "chunk_index": 0,
+        "k": 4,
+        "m": 2,
+        "valid_before": 6,
+        "valid_shards_lost": {
+         "n1": 1,
+         "n2": 1,
+         "n3": 1
+        },
+        "valid_after": 3,
+        "recoverable_after": false,
+        "explanation": "chunk 0: loses 3 valid shard(s) on n1x1, n2x1, n3x1; 3 remain, 4 needed -> LOST"
+       },
+       {
+        "chunk_index": 1,
+        "k": 4,
+        "m": 2,
+        "valid_before": 6,
+        "valid_shards_lost": {
+         "n1": 1,
+         "n2": 1,
+         "n3": 1
+        },
+        "valid_after": 3,
+        "recoverable_after": false,
+        "explanation": "chunk 1: loses 3 valid shard(s) on n1x1, n2x1, n3x1; 3 remain, 4 needed -> LOST"
+       },
+       {
+        "chunk_index": 2,
+        "k": 4,
+        "m": 2,
+        "valid_before": 6,
+        "valid_shards_lost": {
+         "n1": 1,
+         "n2": 1,
+         "n3": 1
+        },
+        "valid_after": 3,
+        "recoverable_after": false,
+        "explanation": "chunk 2: loses 3 valid shard(s) on n1x1, n2x1, n3x1; 3 remain, 4 needed -> LOST"
+       },
+       {
+        "chunk_index": 3,
+        "k": 4,
+        "m": 2,
+        "valid_before": 6,
+        "valid_shards_lost": {
+         "n1": 1,
+         "n2": 1,
+         "n3": 1
+        },
+        "valid_after": 3,
+        "recoverable_after": false,
+        "explanation": "chunk 3: loses 3 valid shard(s) on n1x1, n2x1, n3x1; 3 remain, 4 needed -> LOST"
+       }
+      ],
+      "explanation": "Data loss: 4 stripe(s) fall below k (chunks 0, 1, 2, 3)."
+     },
+     {
+      "file_id": "120c676645c744929ddcdc025a16af0e",
+      "name": "beta.bin",
+      "sha256": "1b09e095fe0af3106605cf7dcbc6a5b5eb29e440849677d38c13e922a79f371d",
+      "status_before": "healthy",
+      "status_after": "lost",
+      "recoverable_before": true,
+      "recoverable_after": false,
+      "fault_tolerance_after": -1,
+      "stripes_affected": 1,
+      "stripes_lost": [
+       0
+      ],
+      "stripes": [
+       {
+        "chunk_index": 0,
+        "k": 2,
+        "m": 1,
+        "valid_before": 3,
+        "valid_shards_lost": {
+         "n1": 1,
+         "n2": 1,
+         "n3": 1
+        },
+        "valid_after": 0,
+        "recoverable_after": false,
+        "explanation": "chunk 0: loses 3 valid shard(s) on n1x1, n2x1, n3x1; 0 remain, 2 needed -> LOST"
+       }
+      ],
+      "explanation": "Data loss: 1 stripe(s) fall below k (chunks 0)."
+     }
+    ]
+   },
+   "outage_results": {
+    "b1e11ee173e845809a7a9a494ef99846": {
+     "name": "alpha.bin",
+     "sha256_expected": "d9963373910f20d774f32c8fb2898fab29825242c019d091d1a53a527b7b5105",
+     "predicted_recoverable": false,
+     "actual_recoverable": false,
+     "prediction_matched": true,
+     "recovered": false,
+     "error": "file b1e11ee173e845809a7a9a494ef99846 chunk 0: only 3 intact shards, need 4",
+     "bytes_read": 0,
+     "sha256_actual": null,
+     "sha256_match": false,
+     "reconstructed_chunks": 0,
+     "shard_issues": {
+      "node_down": 3
+     },
+     "elapsed_ms": 2022.9
+    },
+    "120c676645c744929ddcdc025a16af0e": {
+     "name": "beta.bin",
+     "sha256_expected": "1b09e095fe0af3106605cf7dcbc6a5b5eb29e440849677d38c13e922a79f371d",
+     "predicted_recoverable": false,
+     "actual_recoverable": false,
+     "prediction_matched": true,
+     "recovered": false,
+     "error": "file 120c676645c744929ddcdc025a16af0e chunk 0: only 0 intact shards, need 2",
+     "bytes_read": 0,
+     "sha256_actual": null,
+     "sha256_match": false,
+     "reconstructed_chunks": 0,
+     "shard_issues": {
+      "node_down": 3
+     },
+     "elapsed_ms": 2010.4
+    },
+    "e3fe2e2026e442979fcfff1719853a8b": {
+     "name": "empty.txt",
+     "sha256_expected": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+     "predicted_recoverable": true,
+     "actual_recoverable": true,
+     "prediction_matched": true,
+     "recovered": true,
+     "error": null,
+     "bytes_read": 0,
+     "sha256_actual": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+     "sha256_match": true,
+     "reconstructed_chunks": 0,
+     "shard_issues": {},
+     "elapsed_ms": 1999.9
+    }
+   },
+   "prediction_matched": true,
+   "mismatches": [],
+   "restore_errors": [],
+   "repair": {
+    "files_checked": 3,
+    "shards_checked": 27,
+    "issues": 0,
+    "repaired": 0,
+    "unrepaired": 0,
+    "lost_chunks": [],
+    "healthy": true,
+    "details": []
+   },
+   "verification": {
+    "files_checked": 3,
+    "shards_checked": 27,
+    "issues": 0,
+    "repaired": 0,
+    "unrepaired": 0,
+    "lost_chunks": [],
+    "healthy": true,
+    "details": []
+   },
+   "final_integrity": {
+    "b1e11ee173e845809a7a9a494ef99846": {
+     "recovered": true,
+     "sha256_match": true,
+     "error": null
+    },
+    "120c676645c744929ddcdc025a16af0e": {
+     "recovered": true,
+     "sha256_match": true,
+     "error": null
+    },
+    "e3fe2e2026e442979fcfff1719853a8b": {
+     "recovered": true,
+     "sha256_match": true,
+     "error": null
+    }
+   },
+   "all_files_intact_after": true,
+   "timeline": [
+    {
+     "ts": "2026-10-24T19:53:14.932+00:00",
+     "action": "recorded_initial_state",
+     "files": 3
+    },
+    {
+     "ts": "2026-10-24T19:53:14.936+00:00",
+     "action": "node_stopped",
+     "node_id": "n1"
+    },
+    {
+     "ts": "2026-10-24T19:53:14.940+00:00",
+     "action": "node_stopped",
+     "node_id": "n2"
+    },
+    {
+     "ts": "2026-10-24T19:53:14.944+00:00",
+     "action": "node_stopped",
+     "node_id": "n3"
+    },
+    {
+     "ts": "2026-10-24T19:53:16.952+00:00",
+     "action": "verified_nodes_down",
+     "still_up": []
+    },
+    {
+     "ts": "2026-10-24T19:53:22.985+00:00",
+     "action": "retrieval_attempted",
+     "files": 3,
+     "recovered": 1
+    },
+    {
+     "ts": "2026-10-24T19:53:24.130+00:00",
+     "action": "node_restored",
+     "node_id": "n1",
+     "wiped": false
+    },
+    {
+     "ts": "2026-10-24T19:53:25.265+00:00",
+     "action": "node_restored",
+     "node_id": "n2",
+     "wiped": false
+    },
+    {
+     "ts": "2026-10-24T19:53:26.408+00:00",
+     "action": "node_restored",
+     "node_id": "n3",
+     "wiped": false
+    },
+    {
+     "ts": "2026-10-24T19:53:26.456+00:00",
+     "action": "repair_ran",
+     "repaired": 0,
+     "unrepaired": 0
+    },
+    {
+     "ts": "2026-10-24T19:53:26.472+00:00",
+     "action": "verification_scrub",
+     "healthy": true
+    },
+    {
+     "ts": "2026-10-24T19:53:26.504+00:00",
+     "action": "final_readback",
+     "intact": 3
+    }
+   ],
+   "summary": "Failed n1, n2, n3. Predicted 1/3 files recoverable; actually recovered 1/3 with matching SHA-256. Prediction MATCHED. Restored (restart); repair rebuilt 0 shard(s); cluster healthy after repair."
+  }
+ }
+}

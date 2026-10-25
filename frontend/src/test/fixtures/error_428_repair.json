@@ -1,0 +1,10 @@
+{
+ "status": 428,
+ "body": {
+  "error": {
+   "code": "confirmation_required",
+   "message": "repair changes stored data; send {\"confirm\": true}",
+   "details": {}
+  }
+ }
+}

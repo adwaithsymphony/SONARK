@@ -1,0 +1,10 @@
+{
+ "status": 409,
+ "body": {
+  "error": {
+   "code": "conflict",
+   "message": "mode 'replace' refused: the prediction says some files would be lost, and wiping the nodes would make that permanent",
+   "details": {}
+  }
+ }
+}

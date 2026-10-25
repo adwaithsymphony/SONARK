@@ -1,0 +1,24 @@
+{
+ "status": 428,
+ "body": {
+  "error": {
+   "code": "confirmation_required",
+   "message": "confirmation required: preview this scenario and pass its scenario_id as 'confirm'",
+   "details": {
+    "expected_confirm": "scn-23a17aa78ab1",
+    "preview": {
+     "scenario_id": "scn-23a17aa78ab1",
+     "summary": {
+      "files_total": 3,
+      "files_affected": 2,
+      "files_unaffected": 1,
+      "files_lost_after": 0,
+      "files_newly_lost": 0,
+      "data_loss_predicted": false
+     },
+     "explanation": "Failing n2 would make 0 recoverable file(s) unrecoverable; 2 affected file(s) survive."
+    }
+   }
+  }
+ }
+}

@@ -1,0 +1,19 @@
+{
+ "status": 400,
+ "body": {
+  "error": {
+   "code": "unknown_node",
+   "message": "unknown node(s): zz",
+   "details": {
+    "known": [
+     "n1",
+     "n2",
+     "n3",
+     "n4",
+     "n5",
+     "n6"
+    ]
+   }
+  }
+ }
+}

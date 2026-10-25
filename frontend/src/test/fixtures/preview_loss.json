@@ -1,0 +1,143 @@
+{
+ "status": 200,
+ "body": {
+  "data": {
+   "scenario_id": "scn-089b6858a42a",
+   "nodes": [
+    "n1",
+    "n2",
+    "n3"
+   ],
+   "nodes_already_down": [],
+   "snapshot": {
+    "taken_at": "2026-10-24T19:53:05+00:00",
+    "verified": true,
+    "fingerprint": "c2e47a637192b34001250760dcf225a8003138dfcad5d5502b9da7ea2600c3e8"
+   },
+   "summary": {
+    "files_total": 3,
+    "files_affected": 2,
+    "files_unaffected": 1,
+    "files_lost_after": 2,
+    "files_newly_lost": 2,
+    "data_loss_predicted": true
+   },
+   "predictions": {
+    "b1e11ee173e845809a7a9a494ef99846": false,
+    "120c676645c744929ddcdc025a16af0e": false,
+    "e3fe2e2026e442979fcfff1719853a8b": true
+   },
+   "files": [
+    {
+     "file_id": "b1e11ee173e845809a7a9a494ef99846",
+     "name": "alpha.bin",
+     "sha256": "d9963373910f20d774f32c8fb2898fab29825242c019d091d1a53a527b7b5105",
+     "status_before": "healthy",
+     "status_after": "lost",
+     "recoverable_before": true,
+     "recoverable_after": false,
+     "fault_tolerance_after": -1,
+     "stripes_affected": 4,
+     "stripes_lost": [
+      0,
+      1,
+      2,
+      3
+     ],
+     "stripes": [
+      {
+       "chunk_index": 0,
+       "k": 4,
+       "m": 2,
+       "valid_before": 6,
+       "valid_shards_lost": {
+        "n1": 1,
+        "n2": 1,
+        "n3": 1
+       },
+       "valid_after": 3,
+       "recoverable_after": false,
+       "explanation": "chunk 0: loses 3 valid shard(s) on n1x1, n2x1, n3x1; 3 remain, 4 needed -> LOST"
+      },
+      {
+       "chunk_index": 1,
+       "k": 4,
+       "m": 2,
+       "valid_before": 6,
+       "valid_shards_lost": {
+        "n1": 1,
+        "n2": 1,
+        "n3": 1
+       },
+       "valid_after": 3,
+       "recoverable_after": false,
+       "explanation": "chunk 1: loses 3 valid shard(s) on n1x1, n2x1, n3x1; 3 remain, 4 needed -> LOST"
+      },
+      {
+       "chunk_index": 2,
+       "k": 4,
+       "m": 2,
+       "valid_before": 6,
+       "valid_shards_lost": {
+        "n1": 1,
+        "n2": 1,
+        "n3": 1
+       },
+       "valid_after": 3,
+       "recoverable_after": false,
+       "explanation": "chunk 2: loses 3 valid shard(s) on n1x1, n2x1, n3x1; 3 remain, 4 needed -> LOST"
+      },
+      {
+       "chunk_index": 3,
+       "k": 4,
+       "m": 2,
+       "valid_before": 6,
+       "valid_shards_lost": {
+        "n1": 1,
+        "n2": 1,
+        "n3": 1
+       },
+       "valid_after": 3,
+       "recoverable_after": false,
+       "explanation": "chunk 3: loses 3 valid shard(s) on n1x1, n2x1, n3x1; 3 remain, 4 needed -> LOST"
+      }
+     ],
+     "explanation": "Data loss: 4 stripe(s) fall below k (chunks 0, 1, 2, 3)."
+    },
+    {
+     "file_id": "120c676645c744929ddcdc025a16af0e",
+     "name": "beta.bin",
+     "sha256": "1b09e095fe0af3106605cf7dcbc6a5b5eb29e440849677d38c13e922a79f371d",
+     "status_before": "healthy",
+     "status_after": "lost",
+     "recoverable_before": true,
+     "recoverable_after": false,
+     "fault_tolerance_after": -1,
+     "stripes_affected": 1,
+     "stripes_lost": [
+      0
+     ],
+     "stripes": [
+      {
+       "chunk_index": 0,
+       "k": 2,
+       "m": 1,
+       "valid_before": 3,
+       "valid_shards_lost": {
+        "n1": 1,
+        "n2": 1,
+        "n3": 1
+       },
+       "valid_after": 0,
+       "recoverable_after": false,
+       "explanation": "chunk 0: loses 3 valid shard(s) on n1x1, n2x1, n3x1; 0 remain, 2 needed -> LOST"
+      }
+     ],
+     "explanation": "Data loss: 1 stripe(s) fall below k (chunks 0)."
+    }
+   ],
+   "explanation": "Failing n1, n2, n3 would make 2 recoverable file(s) unrecoverable; 0 affected file(s) survive.",
+   "executable": true
+  }
+ }
+}
